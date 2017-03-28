@@ -23,6 +23,13 @@
 
     - Handle `IncMasterN` messages.
 
+### New Modules
+
+  * `XMonad.Actions.Prefix`
+
+    - A module that allows the user to use an Emacs-style prefix
+      argument (raw or numeric).
+
 ## 0.13 (February 10, 2017)
 
 ### Breaking Changes
