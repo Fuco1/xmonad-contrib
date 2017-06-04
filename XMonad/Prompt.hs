@@ -368,7 +368,11 @@ mkXPromptWithReturn t conf compl action = do
   let hs = fromMaybe [] $ M.lookup (showXPrompt t) hist
       om = (XPSingleMode compl (XPT t)) --operation mode
       st = initState d rw w s om gc fs hs conf numlock
-  st' <- io $ execStateT runXP st
+  st' <- io $ catch
+               (execStateT runXP st)
+               (\(SomeException _) -> do
+                  ungrabKeyboard d currentTime
+                  return $ st { successful = False })
 
   releaseXMF fs
   io $ freeGC d gc
